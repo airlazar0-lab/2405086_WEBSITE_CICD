@@ -10,19 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -p 8022 -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
-
-      - name: Deploy to Server
-        run: |
-          rsync -avz --delete \
-          -e "ssh -p 8022 -i ~/.ssh/id_ed25519" \
-          ./ \
-          ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_PATH }}
+      - name: Test
+        run: echo "Pipeline jalan"
